@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego Store - Официальный магазин конструкторов Lego</title>
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Шапка сайта */
+        header {
+            background-color: #e62129;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .logo span {
+            color: #ffde00;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+        
+        nav ul li a:hover {
+            color: #ffde00;
+        }
+        
+        /* Выпадающее меню */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            width: 200px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            padding: 10px 0;
+            display: none;
+            z-index: 100;
+        }
+        
+        nav ul li:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu li {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .dropdown-menu a {
+            color: #333;
+            display: block;
+            padding: 8px 15px;
+            font-weight: normal;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: #f0f0f0;
+            color: #e62129;
+        }
+        
+        /* Баннер */
+        .banner {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpq1GuErd30xetSiV7Nhn4U_OcVJ-BZX52XA&s');        
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .banner-content {
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 30px;
+            max-width: 500px;
+            border-radius: 5px;
+        }
+        
+        .banner h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .banner p {
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #e62129;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c41c23;
+        }
+        
+        /* Категории */
+        .categories {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: #e62129;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-img {
+            height: 150px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .category-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .category-info h3 {
+            margin-bottom: 10px;
+            color: #e62129;
+        }
+        
+        /* Популярные товары */
+        .products {
+            margin-bottom: 40px;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-img {
+            height: 200px;
+            background-color: #ddd;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+            color: #e62129;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .product-age {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            color: #ffde00;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffde00;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            color: #aaa;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">LEGO<span>STORE</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Главная</a></li>
+                        <li>
+                           <a href="#">Каталог</a>
+                           <ul class="dropdown-menu">
+                            <li><a href="#">Минифигурки лего</a></li>
+                            <li><a href="#">Marvel</a></li>
+                            <li><a href="#">Starwars</a></li>
+                            <li><a href="#">Ninjago</a></li>
+                            <li><a href="#">Harry Poter</a></li>
+                            <li><a href="#">SUPER Mario</a></li>
+                            <li><a href="#">Майнкрафт</a></li>
+                            <li><a href="#">Technic</a></li>
+                            <li><a href="#">Бэтмен</a></li>
+                            <li><a href="#">Disney</a></li>
+                            <li><a href="#">Friends</a></li>
+                            <li><a href="#">ART</a></li>
+                            <li><a href="#">FORTNITE</a></li>
+                            <li><a href="#">Duplo</a></li>
+                           </ul>
+                        </li>    
+                        <li><a href="#">Новинки</a></li>
+                        <li><a href="#">Акции</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Истории</a></li>
+                        <li><a href="#">Корзина</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Баннер -->
+    <section class="banner">
+        <div class="container">
+            <div class="banner-content">
+                <h1>Новая коллекция Lego 2024</h1>
+                <p>Огромный выбор конструкторов для детей и взрослых. Бесплатная доставка от 3000 руб.</p>
+                            
+                <a href="#" class="btn">Смотреть новинки</a>
+            </div>
+        </div>
+    </section>
+    
+    <main class="container">
+        <!-- Категории -->
+        <section class="categories">
+            <h2 class="section-title">Категории</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1GDlC659eP3QACO-qi_-wjPex0aDT1UkwYQ&s');"></div>
+                    <div class="category-info">
+                        <h3>Lego City</h3>
+                        <a href="#" class="btn">Смотреть</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgnuSmiFPMJo5M4dD8W8n818qdOC5TV10kIg&s');"></div>
+                    <div class="category-info">
+                        <h3>Lego Star Wars</h3>
+                        <a href="#" class="btn">Смотреть</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('data:image/jpeg;base64,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');"></div>
+                    <div class="category-info">
+                        <h3>Lego Friends</h3>
+                        <a href="#" class="btn">Смотреть</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://cdn.appleprostore.ru/wp-content/uploads/2024/04/lego-lamborghini-sian-42115-3-600x600.png');"></div>
+                    <div class="category-info">
+                        <h3>Lego Technic</h3>
+                        <a href="#" class="btn">Смотреть</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Популярные товары -->
+        <section class="products">
+            <h2 class="section-title">Популярные товары</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJEiaR9UDXN5x6EPnhju3T16Q8M1R5jYnZug&s');"></div>
+                    <div class="product-info">
+                        <h3>Lego Star Wars Millennium Falcon</h3>
+                        <div class="product-price">89 999 руб.</div>
+                        <div class="product-age">9+ лет</div>
+                        <a href="#" class="btn">В корзину</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM-kzR0a7rGPBeqfWl25XGmGa333pIO1CoFQ&s');"></div>
+                    <div class="product-info">
+                        <h3>Lego City Пожарная станция</h3>
+                        <div class="product-price">3 999 руб.</div>
+                        <div class="product-age">6+ лет</div>
+                        <a href="#" class="btn">В корзину</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhWRpKp6lxDn4TFOEuB4me_vQ_1clCe3oOmg&s');"></div>
+                    <div class="product-info">
+                        <h3>Lego Friends Кафе</h3>
+                        <div class="product-price"> 999 руб.</div>
+                        <div class="product-age">6+ лет</div>
+                        <a href="#" class="btn">В корзину</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Магазин</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Каталог</a></li>
+                        <li><a href="#">Акции</a></li>
+                        <li><a href="#">Новинки</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Доставка</a></li>
+                        <li><a href="#">Оплата</a></li>
+                        <li><a href="#">Возврат</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Телефон: +7 900 036 78 46 б</li>
+                        <li>Email: info@legostore.ru</li>
+                        <li>Адрес: г. Москва, ул. Строителей, 15</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Соцсети</h3>
+                    <ul>
+                        <li><a href="#">ВКонтакте</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">Tik Tok</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2023 Lego Store. Все права защищены. LEGO является товарным знаком группы компаний LEGO, которая не поддерживает, не разрешает и не спонсирует этот сайт.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
